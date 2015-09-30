@@ -24,7 +24,9 @@
 #define CPACKAGE_HPP
 
 
+#include <QFile>
 #include <QList>
+#include <QDebug>
 #include <QString>
 #include <QVariant>
 #include <QDateTime>
@@ -43,7 +45,7 @@ class CPackage
         QString m_author;
         QString m_name;
         QString m_version; // major.stage.revision
-        QString m_build;   // auto incremented number
+        quint64 m_build;   // auto incremented number
         QString m_package;
 
         QString m_group;
@@ -57,16 +59,40 @@ class CPackage
 
     public:
         CPackage();
+
         QString author() const;
-        QString package() const;
         QString name() const;
         QString version() const;
-        QString build() const;
-        QList<CPackageDependency> dependency() const;
+        quint64 build() const;
+        QString package() const;
+
+        QString group() const;
+        QDateTime created() const;
+        QDateTime updated() const;
+        QString description() const;
+
+        QMap<QString,QString> urls() const;
         QList<QString> qdependency() const;
+        QList<CPackageDependency> dependency() const;
+
+        void setAuthor(const QString &a_author);
+        void setName(const QString &a_name);
+        void setVersion(const QString &a_version);
+        void setBuild(const quint64 &a_build);
+        void setPackage(const QString &a_package);
+
+        void setGroup(const QString &a_group);
+        void setCreated(const QDateTime &a_created);
+        void setUpdated(const QDateTime &a_updated);
+        void setDescription(const QString &a_description);
+
+        void addUrl(const QString &name, const QString &val);
+        void addQdependency(const QString &name);
+        void addDependency(const CPackageDependency &pdcy);
 
         QString toJsonString();
         bool fromJsonString(const QString &jstr);
+        bool fromJsonFile(const QString &path);
 };
 
 #endif // CPACKAGE_HPP
