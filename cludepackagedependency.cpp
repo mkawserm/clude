@@ -5,6 +5,25 @@ CLudePackageDependency::CLudePackageDependency()
 
 }
 
+CLudePackageDependency::CLudePackageDependency(const QString &pinfo)
+{
+    this->m_optor = "";
+    foreach (const QString &val, QStringList()<<">="<<"==") {
+        if(pinfo.indexOf(val)!=-1){
+            this->m_optor = val;
+        }
+    }
+    if(!this->m_optor.isEmpty()){
+        QStringList vVal = pinfo.split(this->m_optor);
+        if(vVal.size()==2){
+            this->m_version = vVal[1];
+            QStringList vPN = QString(vVal.at(0)).split(".");
+            this->m_name = vPN.takeLast();
+            this->m_package = vPN.join(QLatin1String("."));
+        }
+    }
+}
+
 CLudePackageDependency::CLudePackageDependency(const QString &p,const QString &n,const QString &o,const QString &v):
     m_package(p),
     m_name(n),

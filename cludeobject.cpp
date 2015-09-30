@@ -25,6 +25,13 @@ void CLudeObject::process(const QStringList &argl)
                 QCoreApplication::translate("main", "package"));
     this->m_parser.addOption(init_project);
 
+    //update build
+    QCommandLineOption update_build(
+                QStringList()<<"update-build",
+                QCoreApplication::translate("main","update build number of the given path"),
+                QCoreApplication::translate("main","path"));
+    this->m_parser.addOption(update_build);
+
 
     this->m_parser.process(argl);
     if(this->m_parser.isSet(pwd)){
@@ -73,6 +80,10 @@ void CLudeObject::process(const QStringList &argl)
         }
 
     }
+    else if(this->m_parser.isSet(update_build)){
+        QString path = this->m_parser.value(update_build);
+        CLudeObject::updateBuild(path);
+    }
 }
 
 void CLudeObject::initilizeProject(const QString &package, const QString &name, const QString &path)
@@ -111,5 +122,36 @@ void CLudeObject::initilizeProject(const QString &package, const QString &name, 
     }
     else{
         qDebug() << "Failed to initilize project";
+    }
+}
+
+void CLudeObject::updateBuild(const QString &path)
+{
+    if(path.isEmpty()){
+        qDebug() << "Application path cannot be empty";
+        return;
+    }
+
+    QString vPath = QDir::toNativeSeparators(path+QLatin1String("/cludepackage.json"));
+    QFile vFile(vPath);
+    if(!vFile.exists()){
+        qDebug() << "PATH: "<<vPath;
+        qDebug() << "cludepackage.json file does not exists";
+    }
+    else{
+        CLudePackage clp;
+        if(clp.fromJsonFile(vPath)){
+            clp.setUpdated(QDateTime::currentDateTime().toLocalTime());
+            clp.setBuild(clp.build()+1);
+            if(clp.toJsonFile(vPath)){
+                qDebug() << "build updated to :"<<clp.build();
+            }
+            else{
+                qDebug() << "failed to update build";
+            }
+        }
+        else{
+            qDebug() << "cludepackage.json file parsing error";
+        }
     }
 }

@@ -23,6 +23,7 @@ class CLudeObject
         void process(const QStringList &argl);
 
         static void initilizeProject(const QString &package,const QString &name,const QString &path);
+        static void updateBuild(const QString &path);
 };
 
 #endif // CLUDEOBJECT_HPP

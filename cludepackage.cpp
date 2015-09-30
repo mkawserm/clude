@@ -194,3 +194,61 @@ bool CLudePackage::toJsonFile(const QString &path)
     }
 }
 
+bool CLudePackage::fromJsonString(const QString &jstr)
+{
+    QJsonParseError *e = new QJsonParseError();
+    QJsonDocument doc = QJsonDocument::fromJson(jstr.toLocal8Bit(),e);
+    QJsonObject root = doc.object();
+
+    this->m_author = root.value("author").toString();
+    this->m_name = root.value("name").toString();
+    this->m_version = root.value("version").toString();
+    this->m_build = root.value("build").toVariant().toLongLong();
+    this->m_package = root.value("package").toString();
+
+    this->m_group = root.value("group").toString();
+    this->m_created = QDateTime::fromString(root.value("created").toString(),QLatin1String("dd/MM/yyyy hh:mm:ss A"));
+    this->m_updated = QDateTime::fromString(root.value("updated").toString(),QLatin1String("dd/MM/yyyy hh:mm:ss A"));
+    this->m_description = root.value("description").toString();
+
+    this->m_tags.clear();
+    QJsonArray vTags = root.value("tags").toArray();
+    foreach (const QJsonValue &val, vTags) {
+        this->m_tags.append(val.toString());
+    }
+
+    this->m_urls.clear();
+    QJsonObject vUrls = root.value("urls").toObject();
+    foreach (const QString &key, vUrls.keys()) {
+        this->m_urls[key] = vUrls[key].toString();
+    }
+
+    this->m_qdependency.clear();
+    QJsonArray vQdependency = root.value("qdependency").toArray();
+    foreach (const QJsonValue &val, vQdependency) {
+        this->m_qdependency.append(val.toString());
+    }
+
+    this->m_dependency.clear();
+    QJsonArray vDependency = root.value("dependency").toArray();
+    foreach (const QJsonValue &val, vDependency) {
+        this->m_dependency.append(CLudePackageDependency(val.toString()));
+    }
+
+    //qDebug() << e->errorString();
+    return e->error==QJsonParseError::NoError;
+}
+
+bool CLudePackage::fromJsonFile(const QString &path)
+{
+    QFile vFile(path);
+    if(vFile.open(QIODevice::ReadWrite|QIODevice::Text)){
+        bool b = this->fromJsonString(QString(vFile.readAll().constData()));
+        vFile.close();
+        return b;
+    }
+    else{
+        return false;
+    }
+}
+

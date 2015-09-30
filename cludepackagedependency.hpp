@@ -16,6 +16,7 @@ class CLudePackageDependency
         QString m_version;
     public:
         CLudePackageDependency();
+        CLudePackageDependency(const QString &pinfo);
         CLudePackageDependency(const QString &p,const QString &n,const QString &o,const QString &v);
         QString package() const;
         QString name() const;
