@@ -1,5 +1,5 @@
 /**************************************************************************************************
- * Class Name     : CPackage
+ * Class Name     : CLudePackage
  * Base Class     :
  * Class Version  : 1.0.0
  * SourceCodeURL  :
@@ -20,8 +20,8 @@
  * BuildScheme    : auto incremented number
  *************************************************************************************************/
 
-#ifndef CPACKAGE_HPP
-#define CPACKAGE_HPP
+#ifndef CLudePackage_HPP
+#define CLudePackage_HPP
 
 
 #include <QFile>
@@ -34,18 +34,18 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-#include "cpackagedependency.hpp"
+#include "cludePackagedependency.hpp"
 
-class CPackage;
-class CPackageDependency;
+class CLudePackage;
+class CLudePackageDependency;
 
-class CPackage
+class CLudePackage
 {
     private:
         QString m_author;
         QString m_name;
         QString m_version; // major.stage.revision
-        quint64 m_build;   // auto incremented number
+        qint64 m_build;   // auto incremented number
         QString m_package;
 
         QString m_group;
@@ -53,17 +53,18 @@ class CPackage
         QDateTime m_updated;
         QString m_description;
 
+        QList<QString> m_tags;
         QMap <QString,QString> m_urls;
         QList <QString> m_qdependency;
-        QList <CPackageDependency> m_dependency;
+        QList <CLudePackageDependency> m_dependency;
 
     public:
-        CPackage();
+        CLudePackage();
 
         QString author() const;
         QString name() const;
         QString version() const;
-        quint64 build() const;
+        qint64 build() const;
         QString package() const;
 
         QString group() const;
@@ -71,14 +72,15 @@ class CPackage
         QDateTime updated() const;
         QString description() const;
 
+        QList<QString> tags() const;
         QMap<QString,QString> urls() const;
         QList<QString> qdependency() const;
-        QList<CPackageDependency> dependency() const;
+        QList<CLudePackageDependency> dependency() const;
 
         void setAuthor(const QString &a_author);
         void setName(const QString &a_name);
         void setVersion(const QString &a_version);
-        void setBuild(const quint64 &a_build);
+        void setBuild(const qint64 &a_build);
         void setPackage(const QString &a_package);
 
         void setGroup(const QString &a_group);
@@ -86,13 +88,16 @@ class CPackage
         void setUpdated(const QDateTime &a_updated);
         void setDescription(const QString &a_description);
 
+        void addTag(const QString &tag);
         void addUrl(const QString &name, const QString &val);
         void addQdependency(const QString &name);
-        void addDependency(const CPackageDependency &pdcy);
+        void addDependency(const CLudePackageDependency &pdcy);
 
         QString toJsonString();
+        bool toJsonFile(const QString &path);
+
         bool fromJsonString(const QString &jstr);
         bool fromJsonFile(const QString &path);
 };
 
-#endif // CPACKAGE_HPP
+#endif // CLudePackage_HPP

@@ -1,13 +1,13 @@
-#ifndef CPACKAGEDEPENDENCY_HPP
-#define CPACKAGEDEPENDENCY_HPP
+#ifndef CLudePackageDEPENDENCY_HPP
+#define CLudePackageDEPENDENCY_HPP
 
 #include <QString>
-#include "cpackage.hpp"
+#include "cludepackage.hpp"
 
-class CPackage;
-class CPackageDependency;
+class CLudePackage;
+class CLudePackageDependency;
 
-class CPackageDependency
+class CLudePackageDependency
 {
     private:
         QString m_package;
@@ -15,7 +15,7 @@ class CPackageDependency
         QString m_optor;
         QString m_version;
     public:
-        CPackageDependency();
+        CLudePackageDependency();
         QString package() const;
         QString name() const;
         QString optor() const;
@@ -27,4 +27,4 @@ class CPackageDependency
         void setVersion(const QString &a_version);
 };
 
-#endif // CPACKAGEDEPENDENCY_HPP
+#endif // CLudePackageDEPENDENCY_HPP

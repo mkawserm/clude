@@ -8,11 +8,11 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    cpackage.cpp \
-    cpackagedependency.cpp \
-    cludeobject.cpp
+    cludeobject.cpp \
+    cludepackage.cpp \
+    cludepackagedependency.cpp
 
 HEADERS += \
-    cpackage.hpp \
-    cpackagedependency.hpp \
-    cludeobject.hpp
+    cludeobject.hpp \
+    cludepackage.hpp \
+    cludepackagedependency.hpp
