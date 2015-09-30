@@ -50,6 +50,11 @@ QString CLudePackage::description() const
     return this->m_description;
 }
 
+QList<QString> CLudePackage::licenses() const
+{
+    return this->m_licenses;
+}
+
 QList<QString> CLudePackage::tags() const
 {
     return this->m_tags;
@@ -113,6 +118,11 @@ void CLudePackage::setUpdated(const QDateTime &a_updated)
 void CLudePackage::setDescription(const QString &a_description)
 {
     this->m_description = a_description;
+}
+
+void CLudePackage::addLicense(const QString &name)
+{
+    if(!this->m_licenses.contains(name)) this->m_licenses.append(name);
 }
 
 void CLudePackage::addTag(const QString &tag)

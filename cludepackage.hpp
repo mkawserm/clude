@@ -53,7 +53,8 @@ class CLudePackage
         QDateTime m_updated;
         QString m_description;
 
-        QList<QString> m_tags;
+        QList <QString> m_tags;
+        QList <QString> m_licenses;
         QMap <QString,QString> m_urls;
         QList <QString> m_qdependency;
         QList <CLudePackageDependency> m_dependency;
@@ -72,6 +73,7 @@ class CLudePackage
         QDateTime updated() const;
         QString description() const;
 
+        QList<QString> licenses() const;
         QList<QString> tags() const;
         QMap<QString,QString> urls() const;
         QList<QString> qdependency() const;
@@ -88,6 +90,7 @@ class CLudePackage
         void setUpdated(const QDateTime &a_updated);
         void setDescription(const QString &a_description);
 
+        void addLicense(const QString &name);
         void addTag(const QString &tag);
         void addUrl(const QString &name, const QString &val);
         void addQdependency(const QString &name);
