@@ -20,8 +20,8 @@
  * BuildScheme    : auto incremented number
  *************************************************************************************************/
 
-#ifndef CLudePackage_HPP
-#define CLudePackage_HPP
+#ifndef CLUDEPACKAGE_HPP
+#define CLUDEPACKAGE_HPP
 
 
 #include <QFile>
@@ -100,4 +100,4 @@ class CLudePackage
         bool fromJsonFile(const QString &path);
 };
 
-#endif // CLudePackage_HPP
+#endif // CLUDEPACKAGE_HPP

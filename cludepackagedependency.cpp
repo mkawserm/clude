@@ -5,6 +5,14 @@ CLudePackageDependency::CLudePackageDependency()
 
 }
 
+CLudePackageDependency::CLudePackageDependency(const QString &p,const QString &n,const QString &o,const QString &v):
+    m_package(p),
+    m_name(n),
+    m_optor(o),
+    m_version(v)
+{
+
+}
 QString CLudePackageDependency::package() const
 {
     return this->m_package;

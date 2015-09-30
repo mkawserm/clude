@@ -10,6 +10,9 @@
 #include <QCommandLineOption>
 
 
+#include "cludepackage.hpp"
+
+
 class CLudeObject
 {
     private:
@@ -19,7 +22,7 @@ class CLudeObject
         CLudeObject();
         void process(const QStringList &argl);
 
-        static void initilizeProject(const QString &package);
+        static void initilizeProject(const QString &package,const QString &name,const QString &path);
 };
 
 #endif // CLUDEOBJECT_HPP
