@@ -1,6 +1,6 @@
 {
     "author": "kawser",
-    "build": 6,
+    "build": 7,
     "created": "01/10/2015 12:06:21 AM",
     "dependency": [
     ],
@@ -16,7 +16,7 @@
         "package manager",
         "development"
     ],
-    "updated": "01/10/2015 01:54:55 AM",
+    "updated": "01/10/2015 02:31:29 AM",
     "urls": {
         "author": "https://kawser.org",
         "documentation": "https://git.kawser.org/clude",

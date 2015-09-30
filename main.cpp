@@ -1,6 +1,6 @@
 #include <QDebug>
 #include <QCoreApplication>
-#include "cludeobject.hpp"
+#include "cludecommandparser.hpp"
 
 #include "cludepackagedependency.hpp"
 
@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
     /**********************************************************************************************
      * Start Parsing command line arguments
      * *******************************************************************************************/
-    CLudeObject clo;
-    clo.process(a.arguments());
+    CLudeCommandParser ccp;
+    ccp.process(a.arguments());
     return 0;
 }
 

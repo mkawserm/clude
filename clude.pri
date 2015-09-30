@@ -1,9 +1,9 @@
 SOURCES += \
-    $$PWD/cludeobject.cpp \
     $$PWD/cludepackage.cpp \
-    $$PWD/cludepackagedependency.cpp
+    $$PWD/cludepackagedependency.cpp \
+    $$PWD/cludecommandparser.cpp
 
 HEADERS += \
-    $$PWD/cludeobject.hpp \
     $$PWD/cludepackage.hpp \
-    $$PWD/cludepackagedependency.hpp
+    $$PWD/cludepackagedependency.hpp \
+    $$PWD/cludecommandparser.hpp

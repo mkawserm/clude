@@ -1,6 +1,6 @@
-#include "cludeobject.hpp"
+#include "cludecommandparser.hpp"
 
-CLudeObject::CLudeObject()
+CLudeCommandParser::CLudeCommandParser()
 {
     QCoreApplication::setApplicationName("clude");
     QCoreApplication::setApplicationVersion("1.0.0");
@@ -10,7 +10,7 @@ CLudeObject::CLudeObject()
     this->m_parser.addVersionOption();
 }
 
-void CLudeObject::process(const QStringList &argl)
+void CLudeCommandParser::process(const QStringList &argl)
 {
     //add all options here
 
@@ -47,7 +47,7 @@ void CLudeObject::process(const QStringList &argl)
             QString pro = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+one[0]);
             QString name = one[0].replace(".pro","");
             QString pri = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+name+QLatin1String(".pri"));
-            CLudeObject::initilizeProject(package,name,path);
+            CLudeCommandParser::initilizeProject(package,name,path);
             QFile vPriFile(pri);
             if(!vPriFile.exists()){
                 if(vPriFile.open(QIODevice::WriteOnly|QIODevice::Text)){
@@ -82,11 +82,11 @@ void CLudeObject::process(const QStringList &argl)
     }//end of init command
     else if(this->m_parser.isSet(update_build)){
         QString path = this->m_parser.value(update_build);
-        CLudeObject::updateBuild(path);
+        CLudeCommandParser::updateBuild(path);
     }//end of update build command
 }
 
-void CLudeObject::initilizeProject(const QString &package, const QString &name, const QString &path)
+void CLudeCommandParser::initilizeProject(const QString &package, const QString &name, const QString &path)
 {
     QString message = QString("initilizing the project inside the package '%1' folder").arg(package);
     qDebug() << message;
@@ -125,7 +125,7 @@ void CLudeObject::initilizeProject(const QString &package, const QString &name, 
     }
 }
 
-void CLudeObject::updateBuild(const QString &path)
+void CLudeCommandParser::updateBuild(const QString &path)
 {
     if(path.isEmpty()){
         qDebug() << "Application path cannot be empty";

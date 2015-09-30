@@ -1,5 +1,5 @@
-#ifndef CLUDEOBJECT_HPP
-#define CLUDEOBJECT_HPP
+#ifndef CLUDECOMMANDPARSER_HPP
+#define CLUDECOMMANDPARSER_HPP
 
 #include <iostream>
 #include <QDir>
@@ -13,17 +13,17 @@
 #include "cludepackage.hpp"
 
 
-class CLudeObject
+class CLudeCommandParser
 {
     private:
         QCommandLineParser m_parser;
 
     public:
-        CLudeObject();
+        CLudeCommandParser();
         void process(const QStringList &argl);
 
         static void initilizeProject(const QString &package,const QString &name,const QString &path);
         static void updateBuild(const QString &path);
 };
 
-#endif // CLUDEOBJECT_HPP
+#endif // CLUDECOMMANDPARSER_HPP
