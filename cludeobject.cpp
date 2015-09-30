@@ -5,7 +5,7 @@ CLudeObject::CLudeObject()
     QCoreApplication::setApplicationName("clude");
     QCoreApplication::setApplicationVersion("1.0.0");
 
-    this->m_parser.setApplicationDescription("clude is a c++ package manager");
+    this->m_parser.setApplicationDescription("clude c++ source package manager");
     this->m_parser.addHelpOption();
     this->m_parser.addVersionOption();
 }
@@ -79,11 +79,11 @@ void CLudeObject::process(const QStringList &argl)
             qDebug() << "unknown project folder, no *.pro file found.";
         }
 
-    }
+    }//end of init command
     else if(this->m_parser.isSet(update_build)){
         QString path = this->m_parser.value(update_build);
         CLudeObject::updateBuild(path);
-    }
+    }//end of update build command
 }
 
 void CLudeObject::initilizeProject(const QString &package, const QString &name, const QString &path)
