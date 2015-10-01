@@ -4,6 +4,7 @@ CLudeCommandPackageInit::CLudeCommandPackageInit():
     CLudeCommandPackage()
 {
     this->addDescription(QLatin1String("initilize various things"));
+
 }
 
 

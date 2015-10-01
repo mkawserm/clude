@@ -2,7 +2,7 @@
 
 CLudeCommandPackage::CLudeCommandPackage()
 {
-
+    this->m_parser.addHelpOption();
 }
 
 void CLudeCommandPackage::setArgumentList(const QStringList &aglist)

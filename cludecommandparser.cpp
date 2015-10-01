@@ -32,7 +32,7 @@ void CLudeCommandParser::process(const QStringList &arglist)
     else{
         QString ccpn = arguments.at(1);
         if(!this->m_command_package_list.contains(ccpn)){
-            qDebug() << ccpn<< " command package not found";
+            qDebug() << QString("%1 command package not found").arg(ccpn).toLocal8Bit().constData();
         }
         else{
             arguments.removeAt(1);
