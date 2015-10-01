@@ -50,36 +50,3 @@ void CLudeCommandParser::addCommandPackage(CLudeCommandPackage *package)
         this->m_command_package_list.insert(package->name(),package);
     }
 }
-
-/*
-void CLudeCommandParser::updateBuild(const QString &path)
-{
-    if(path.isEmpty()){
-        qDebug() << "Application path cannot be empty";
-        return;
-    }
-
-    QString vPath = QDir::toNativeSeparators(path+QLatin1String("/cludepackage.json"));
-    QFile vFile(vPath);
-    if(!vFile.exists()){
-        qDebug() << "PATH: "<<vPath;
-        qDebug() << "cludepackage.json file does not exists";
-    }
-    else{
-        CLudePackage clp;
-        if(clp.fromJsonFile(vPath)){
-            clp.setUpdated(QDateTime::currentDateTime().toLocalTime());
-            clp.setBuild(clp.build()+1);
-            if(clp.toJsonFile(vPath)){
-                qDebug() << "build updated to :"<<clp.build();
-            }
-            else{
-                qDebug() << "failed to update build";
-            }
-        }
-        else{
-            qDebug() << "cludepackage.json file parsing error";
-        }
-    }
-}
-*/
