@@ -12,3 +12,6 @@ HEADERS += \
     $$PWD/cludecommandparser.hpp \
     $$PWD/cludecommandpackageinit.hpp \
     $$PWD/cludecommandpackage.hpp
+
+DISTFILES += \
+    $$PWD/cludepackage.json

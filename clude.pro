@@ -10,6 +10,3 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 include(clude.pri)
-
-DISTFILES += \
-    cludepackage.json
