@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QDebug>
 #include <QString>
+#include <QDateTime>
 #include <QStringList>
 #include <QCoreApplication>
 #include <QCommandLineParser>
@@ -25,7 +26,10 @@ class CLudeCommandPackageBuildNumber : public CLudeCommandPackage
         QString name() Q_DECL_OVERRIDE;
         QString version() Q_DECL_OVERRIDE;
 
-        void actionBuildNumberUpdate();
+        void actionBuildNumberIncrease();
+        void actionBuildNumberDecrease();
+
+        void updateBuildNumber(int inc);
 };
 
 #endif // CLUDECOMMANDPACKAGEBUILDNUMBER_HPP

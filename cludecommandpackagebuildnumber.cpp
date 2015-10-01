@@ -23,7 +23,22 @@ QString CLudeCommandPackageBuildNumber::version()
     return QLatin1String("1.0.0");
 }
 
+void CLudeCommandPackageBuildNumber::actionBuildNumberIncrease()
+{
+    this->updateBuildNumber(1);
+}
+
+void CLudeCommandPackageBuildNumber::actionBuildNumberDecrease()
+{
+    this->updateBuildNumber(-1);
+}
+
 void CLudeCommandPackageBuildNumber::actionBuildNumberUpdate()
+{
+
+}
+
+void CLudeCommandPackageBuildNumber::updateBuildNumber(int inc)
 {
     QString path = QDir::currentPath();
     if(path.isEmpty()){
@@ -41,7 +56,7 @@ void CLudeCommandPackageBuildNumber::actionBuildNumberUpdate()
         CLudePackage clp;
         if(clp.fromJsonFile(vPath)){
             clp.setUpdated(QDateTime::currentDateTime().toLocalTime());
-            clp.setBuild(clp.build()+1);
+            clp.setBuild(clp.build()+inc);
             if(clp.toJsonFile(vPath)){
                 qDebug() << "build updated to :"<<clp.build();
             }
