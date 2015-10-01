@@ -5,87 +5,53 @@ CLudeCommandParser::CLudeCommandParser()
     QCoreApplication::setApplicationName("clude");
     QCoreApplication::setApplicationVersion("1.0.0");
 
-    this->m_parser.setApplicationDescription("clude c++ source package manager");
-    this->m_parser.addHelpOption();
-    this->m_parser.addVersionOption();
+    //add all command package
+    this->addCommandPackage(new CLudeCommandPackageInit());
 }
 
-void CLudeCommandParser::process(const QStringList &argl)
+CLudeCommandParser::~CLudeCommandParser()
 {
-    //add all options here
-
-    //present working directory
-    QCommandLineOption pwd(QStringList()<<"pwd",QCoreApplication::translate("main","show present working directoy"));
-    this->m_parser.addOption(pwd);
-
-    // initilize the project and create package.json file
-    QCommandLineOption init_project(
-                QStringList() << "init",
-                QCoreApplication::translate("main", "initilize project inside the <package> folder"),
-                QCoreApplication::translate("main", "package"));
-    this->m_parser.addOption(init_project);
-
-    //update build
-    QCommandLineOption update_build(
-                QStringList()<<"update-build",
-                QCoreApplication::translate("main","update build number of the given path"),
-                QCoreApplication::translate("main","path"));
-    this->m_parser.addOption(update_build);
-
-
-    this->m_parser.process(argl);
-    if(this->m_parser.isSet(pwd)){
-        std::cout<<QDir::currentPath().toLocal8Bit().constData();
+    while(this->m_command_package_list.isEmpty()){
+        delete this->m_command_package_list.take(this->m_command_package_list.keys().first());
     }
-    else if(this->m_parser.isSet(init_project)){
-        QDir vDir(QDir::currentPath());
-        vDir.setNameFilters(QStringList()<<"*.pro");
-        QStringList one =  vDir.entryList(QDir::Files);
-        if(one.size()==1){
-            QString package = this->m_parser.value(init_project);
-            QString path = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/cludepackage.json"));
-            QString pro = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+one[0]);
-            QString name = one[0].replace(".pro","");
-            QString pri = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+name+QLatin1String(".pri"));
-            CLudeCommandParser::initilizeProject(package,name,path);
-            QFile vPriFile(pri);
-            if(!vPriFile.exists()){
-                if(vPriFile.open(QIODevice::WriteOnly|QIODevice::Text)){
-                    vPriFile.write("SOURCES += \\\n");
-                    vPriFile.write("\n");
-                    vPriFile.write("HEADERS += \\\n");
+    this->m_command_package_list.clear();
+}
 
-                    vPriFile.close();
-                    qDebug() << pri<< "file created";
-                }
-            }
 
-            //now include it to the pro file
-            qDebug() << "pro file:"<<pro;
-            QFile vProFile(pro);
-            if(vProFile.open(QIODevice::Append|QIODevice::Text)){
-                vProFile.seek(vProFile.size());
-                vProFile.write("\n");
-                vProFile.write(QString("include(%1)").arg(name+QLatin1String(".pri")).toLocal8Bit());
-                vProFile.close();
-                qDebug() << "pri file included to the pro file";
-            }
-            else{
-                qDebug() << "failed to open "<<pro<<" file";
-            }
-
+void CLudeCommandParser::process(const QStringList &arglist)
+{
+    QStringList arguments = arglist;
+    if(arguments.size()<2){
+        qDebug() << "Available command packages: ";
+        int i=1;
+        foreach (const QString &key, this->m_command_package_list.keys()) {
+            qDebug() <<QString("    %1.%2").arg(i).arg(key).toLocal8Bit().constData();
+            ++i;
+        }
+    }
+    else{
+        QString ccpn = arguments.at(1);
+        if(!this->m_command_package_list.contains(ccpn)){
+            qDebug() << ccpn<< " command package not found";
         }
         else{
-            qDebug() << "unknown project folder, no *.pro file found.";
+            arguments.removeAt(1);
+            CLudeCommandPackage *ccp = this->m_command_package_list.value(ccpn);
+            ccp->setArgumentList(arguments);
+            ccp->process();
         }
-
-    }//end of init command
-    else if(this->m_parser.isSet(update_build)){
-        QString path = this->m_parser.value(update_build);
-        CLudeCommandParser::updateBuild(path);
-    }//end of update build command
+    }
 }
 
+
+void CLudeCommandParser::addCommandPackage(CLudeCommandPackage *package)
+{
+    if(!this->m_command_package_list.contains(package->name())){
+        this->m_command_package_list.insert(package->name(),package);
+    }
+}
+
+/*
 void CLudeCommandParser::initilizeProject(const QString &package, const QString &name, const QString &path)
 {
     QString message = QString("initilizing the project inside the package '%1' folder").arg(package);
@@ -155,3 +121,4 @@ void CLudeCommandParser::updateBuild(const QString &path)
         }
     }
 }
+*/

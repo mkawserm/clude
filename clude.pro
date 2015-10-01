@@ -7,10 +7,7 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += main.cpp \
-
-
-HEADERS += \
+SOURCES += main.cpp
 
 include(clude.pri)
 
