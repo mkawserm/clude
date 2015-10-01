@@ -13,6 +13,10 @@
 #include "cludepackage.hpp"
 #include "cludecommandpackage.hpp"
 
+class CLudePackage;
+class CLudeCommandPackage;
+class CLudeCommandPackageBuildNumber;
+
 class CLudeCommandPackageBuildNumber : public CLudeCommandPackage
 {
     public:

@@ -7,6 +7,7 @@ CLudeCommandParser::CLudeCommandParser()
 
     //add all command package
     this->addCommandPackage(new CLudeCommandPackageInit());
+    this->addCommandPackage(new CLudeCommandPackageBuildNumber());
 }
 
 CLudeCommandParser::~CLudeCommandParser()

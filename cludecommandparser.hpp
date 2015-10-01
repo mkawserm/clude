@@ -10,6 +10,7 @@
 
 #include "cludecommandpackage.hpp"
 #include "cludecommandpackageinit.hpp"
+#include "cludecommandpackagebuildnumber.hpp"
 
 
 class CLudeCommandParser

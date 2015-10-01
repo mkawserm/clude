@@ -3,7 +3,7 @@
 CLudeCommandPackageBuildNumber::CLudeCommandPackageBuildNumber():
     CLudeCommandPackage()
 {
-
+    this->addDescription(QLatin1String("update build information"));
 }
 
 void CLudeCommandPackageBuildNumber::process()
