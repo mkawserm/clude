@@ -8,9 +8,26 @@ CLudeCommandPackageBuildNumber::CLudeCommandPackageBuildNumber():
 
 void CLudeCommandPackageBuildNumber::process()
 {
+    QCommandLineOption build_number_increase(
+                QStringList()<<"i"<<"increase",
+                QCoreApplication::translate("main","increase build number by one and update 'updated' field")
+                );
+    this->addOption(build_number_increase);
+
+    QCommandLineOption build_number_decrease(
+                QStringList()<<"d"<<"decrease",
+                                QCoreApplication::translate("main","decrease build number by one and update 'updated' field")
+                );
+    this->addOption(build_number_decrease);
 
     CLudeCommandPackage::process();
     //process all commands here
+    if(this->isSet(build_number_increase)){
+        this->actionBuildNumberIncrease();
+    }
+    else if(this->isSet(build_number_decrease)){
+        this->actionBuildNumberDecrease();
+    }
 }
 
 QString CLudeCommandPackageBuildNumber::name()
@@ -31,11 +48,6 @@ void CLudeCommandPackageBuildNumber::actionBuildNumberIncrease()
 void CLudeCommandPackageBuildNumber::actionBuildNumberDecrease()
 {
     this->updateBuildNumber(-1);
-}
-
-void CLudeCommandPackageBuildNumber::actionBuildNumberUpdate()
-{
-
 }
 
 void CLudeCommandPackageBuildNumber::updateBuildNumber(int inc)
