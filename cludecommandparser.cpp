@@ -52,45 +52,6 @@ void CLudeCommandParser::addCommandPackage(CLudeCommandPackage *package)
 }
 
 /*
-void CLudeCommandParser::initilizeProject(const QString &package, const QString &name, const QString &path)
-{
-    QString message = QString("initilizing the project inside the package '%1' folder").arg(package);
-    qDebug() << message;
-
-    CLudePackage vNewPackage;
-    vNewPackage.setAuthor(QLatin1String("Your Name"));
-    vNewPackage.setName(name);
-    vNewPackage.setVersion(QLatin1String("1.0.0"));
-    vNewPackage.setBuild(0);
-    vNewPackage.setPackage(package);
-
-    vNewPackage.setGroup(QLatin1String("Project Group"));
-    vNewPackage.setCreated(QDateTime::currentDateTime().toLocalTime());
-    vNewPackage.setUpdated(QDateTime::currentDateTime().toLocalTime());
-    vNewPackage.setDescription(QLatin1String("Project description"));
-
-    vNewPackage.addTag("tag1");
-    vNewPackage.addTag("tag2");
-
-    vNewPackage.addUrl("download","http://");
-    vNewPackage.addUrl("documentation","http://");
-    vNewPackage.addUrl("author","http://");
-    //vNewPackage.addUrl("web","http://");
-
-    vNewPackage.addQdependency("core");
-    vNewPackage.addQdependency("gui");
-
-    vNewPackage.addDependency(CLudePackageDependency("package1","name1",">=","1.0.0"));
-    vNewPackage.addDependency(CLudePackageDependency("package2","name2",">=","2.0.0"));
-
-    if(vNewPackage.toJsonFile(path)){
-        qDebug() << "Project successfully initilized...";
-    }
-    else{
-        qDebug() << "Failed to initilize project";
-    }
-}
-
 void CLudeCommandParser::updateBuild(const QString &path)
 {
     if(path.isEmpty()){
