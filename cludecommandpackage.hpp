@@ -20,6 +20,8 @@ class CLudeCommandPackage
         void addOption(const QCommandLineOption &option);
         void addDescription(const QString &des);
 
+        QString description() const;
+
         bool isSet(const QCommandLineOption &option);
         QString value(const QCommandLineOption &option);
         QStringList values(const QCommandLineOption &option);

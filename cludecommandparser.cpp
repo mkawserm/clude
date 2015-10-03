@@ -26,7 +26,7 @@ void CLudeCommandParser::process(const QStringList &arglist)
         qDebug() << "Available command packages: ";
         int i=1;
         foreach (const QString &key, this->m_command_package_list.keys()) {
-            qDebug() <<QString("    %1.%2").arg(i).arg(key).toLocal8Bit().constData();
+            qDebug() <<QString("    %1.%2 :: %3").arg(i).arg(key).arg(this->m_command_package_list.value(key)->description()).toLocal8Bit().constData();
             ++i;
         }
     }

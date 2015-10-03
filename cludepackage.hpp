@@ -45,7 +45,7 @@ class CLudePackage
         QString m_author;
         QString m_name;
         QString m_version; // major.stage.revision
-        qint64 m_build;   // auto incremented number
+        qint64 m_build;    // auto incremented number
         QString m_package;
 
         QString m_group;
@@ -55,7 +55,8 @@ class CLudePackage
 
         QList <QString> m_tags;
         QList <QString> m_licenses;
-        QMap <QString,QString> m_urls;
+        QMap <QString,QString> m_urls;             // author,documentation,download every field
+                                                   // can have multiple links seperated by ";"
         QList <QString> m_qdependency;
         QList <CLudePackageDependency> m_dependency;
 

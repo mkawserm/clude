@@ -20,6 +20,11 @@ void CLudeCommandPackage::addDescription(const QString &des)
     this->m_parser.setApplicationDescription(des);
 }
 
+QString CLudeCommandPackage::description() const
+{
+    return this->m_parser.applicationDescription();
+}
+
 bool CLudeCommandPackage::isSet(const QCommandLineOption &option)
 {
     return this->m_parser.isSet(option);
