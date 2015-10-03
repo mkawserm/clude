@@ -52,11 +52,20 @@ void CLudeCommandPackageInit::actionInitPackage(const QString &pkg)
         QFile vPriFile(pri);
         if(!vPriFile.exists()){
             if(vPriFile.open(QIODevice::WriteOnly|QIODevice::Text)){
-                vPriFile.write("SOURCES += \\\n");
+                vPriFile.write("SOURCES += \\");
                 vPriFile.write("\n");
-                vPriFile.write("HEADERS += \\\n");
+
+                vPriFile.write("HEADERS += \\");
                 vPriFile.write("\n");
-                vPriFile.write("DISTFILES += \\\n");
+
+                vPriFile.write("FORMS += \\");
+                vPriFile.write("\n");
+
+                vPriFile.write("RESOURCES += \\");
+                vPriFile.write("\n");
+
+                vPriFile.write("DISTFILES += \\");
+
                 vPriFile.close();
                 qDebug() << pri<< "file created";
             }

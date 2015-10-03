@@ -4,7 +4,8 @@ SOURCES += \
     $$PWD/cludecommandparser.cpp \
     $$PWD/cludecommandpackageinit.cpp \
     $$PWD/cludecommandpackage.cpp \
-    $$PWD/cludecommandpackagebuildnumber.cpp
+    $$PWD/cludecommandpackagebuildnumber.cpp \
+    $$PWD/prifile.cpp
 
 
 HEADERS += \
@@ -13,7 +14,8 @@ HEADERS += \
     $$PWD/cludecommandparser.hpp \
     $$PWD/cludecommandpackageinit.hpp \
     $$PWD/cludecommandpackage.hpp \
-    $$PWD/cludecommandpackagebuildnumber.hpp
+    $$PWD/cludecommandpackagebuildnumber.hpp \
+    $$PWD/prifile.hpp
 
 DISTFILES += \
     $$PWD/cludepackage.json
