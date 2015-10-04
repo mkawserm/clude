@@ -44,9 +44,10 @@ void CLudeCommandPackageInit::actionInitPackage(const QString &pkg)
     QStringList one =  vDir.entryList(QDir::Files);
     if(one.size()==1){
         QString package = pkg;
-        QString path = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/cludepackage.json"));
         QString pro = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+one[0]);
         QString name = one[0].replace(".pro","");
+        //NOTE changed cludepackage.json to <package_name>.cde
+        QString path = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+name+QLatin1String(".cde"));
         QString pri = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+name+QLatin1String(".pri"));
         this->makeCludePackageJsonFile(package,name,path);
         QFile vPriFile(pri);
@@ -108,6 +109,8 @@ void CLudeCommandPackageInit::makeCludePackageJsonFile(const QString &package, c
     vNewPackage.setUpdated(QDateTime::currentDateTime().toLocalTime());
     vNewPackage.setDescription(QLatin1String("Project description"));
 
+    vNewPackage.addLicense("LGPL V3");
+    vNewPackage.addLicense("MIT");
     vNewPackage.addTag("tag1");
     vNewPackage.addTag("tag2");
 

@@ -159,7 +159,11 @@ QString CLudePackage::toJsonString()
     root["updated"] = QJsonValue(this->m_updated.toString("dd/MM/yyyy hh:mm:ss A"));
     root["description"] = QJsonValue(this->m_description);
 
-    //TODO add licenses array
+    QJsonArray vLicenses;
+    foreach (const QString &l, this->m_licenses) {
+        vLicenses.append(QJsonValue(l));
+    }
+    root["licenses"] = vLicenses;
 
     QJsonArray vTags;
     foreach (const QString &tag, this->m_tags) {
@@ -222,7 +226,12 @@ bool CLudePackage::fromJsonString(const QString &jstr)
     this->m_updated = QDateTime::fromString(root.value("updated").toString(),QLatin1String("dd/MM/yyyy hh:mm:ss A"));
     this->m_description = root.value("description").toString();
 
-    //TODO add licenses array
+    this->m_licenses.clear();
+    QJsonArray vLicenses = root.value("licenses").toArray();
+    foreach (const QJsonValue &l, vLicenses) {
+        this->m_licenses.append(l.toString());
+    }
+
     this->m_tags.clear();
     QJsonArray vTags = root.value("tags").toArray();
     foreach (const QJsonValue &val, vTags) {
