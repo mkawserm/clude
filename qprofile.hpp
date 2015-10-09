@@ -17,14 +17,19 @@
 #ifndef QPROFILE_HPP
 #define QPROFILE_HPP
 
+#include <QDebug>
 #include <QString>
 #include <QStringList>
 
 class QProFile
 {
     private:
+        QString m_path;
+        QString m_last_error;
+
         QString m_target;
         QString m_template;
+
         QStringList m_qt;
         QStringList m_config;
 
@@ -33,8 +38,20 @@ class QProFile
         QStringList m_resources;
         QStringList m_distfiles;
         QStringList m_include;
+
     public:
-        QProFile();
+        explicit QProFile();
+        explicit QProFile(const QString &path);
+
+
+        void setPath(const QString &path);
+        QString path() const;
+
+        QString lastError() const;
+
+        bool isValid() const;
+
+        bool parse();
 };
 
 #endif // QPROFILE_HPP
