@@ -5,7 +5,8 @@ SOURCES += \
     $$PWD/cludecommandpackageinit.cpp \
     $$PWD/cludecommandpackage.cpp \
     $$PWD/cludecommandpackagebuildnumber.cpp \
-    $$PWD/prifile.cpp
+    $$PWD/qresourcefile.cpp \
+    $$PWD/qprofile.cpp
 
 
 HEADERS += \
@@ -15,7 +16,8 @@ HEADERS += \
     $$PWD/cludecommandpackageinit.hpp \
     $$PWD/cludecommandpackage.hpp \
     $$PWD/cludecommandpackagebuildnumber.hpp \
-    $$PWD/prifile.hpp
+    $$PWD/qresourcefile.hpp \
+    $$PWD/qprofile.hpp
 
 DISTFILES += \
     $$PWD/cludepackage.json
