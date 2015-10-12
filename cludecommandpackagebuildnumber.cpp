@@ -52,13 +52,17 @@ void CLudeCommandPackageBuildNumber::actionBuildNumberDecrease()
 
 void CLudeCommandPackageBuildNumber::updateBuildNumber(int inc)
 {
-    QString path = QDir::currentPath();
-    if(path.isEmpty()){
-        qDebug() << "Application path cannot be empty";
+    QDir vDir(QDir::currentPath());
+    vDir.setNameFilters(QStringList()<<"*.pro");
+    QStringList one =  vDir.entryList(QDir::Files);
+    if(one.size()!=1){
+        qDebug() << "No pro file found.";
         return;
     }
 
-    QString vPath = QDir::toNativeSeparators(path+QLatin1String("/cludepackage.json"));
+    QString name = one[0].replace(".pro","");
+    //NOTE changed cludepackage.json to <package_name>.cde
+    QString vPath = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+name+QLatin1String(".cde"));
     QFile vFile(vPath);
     if(!vFile.exists()){
         qDebug() << "PATH: "<<vPath;

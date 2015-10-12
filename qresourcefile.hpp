@@ -6,10 +6,6 @@ class QResourceFile
 {
     public:
         QResourceFile();
-
-    signals:
-
-    public slots:
 };
 
 #endif // QRESOURCEFILE_HPP
