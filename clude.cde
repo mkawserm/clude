@@ -1,0 +1,28 @@
+{
+    "author": "kawser",
+    "build": 30,
+    "created": "01/10/2015 12:06:21 AM",
+    "dependency": [
+    ],
+    "description": "clude will make c++ source code modular and keep track of package information",
+    "group": "development",
+    "licenses": [
+    ],
+    "name": "clude",
+    "package": "app",
+    "qdependency": [
+        "core"
+    ],
+    "tags": [
+        "clude",
+        "package manager",
+        "development"
+    ],
+    "updated": "12/10/2015 11:53:18 AM",
+    "urls": {
+        "author": "https://kawser.org",
+        "documentation": "https://git.kawser.org/clude",
+        "download": "https://git.kawser.org/clude/clude.zip"
+    },
+    "version": "1.0.0"
+}

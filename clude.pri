@@ -20,4 +20,4 @@ HEADERS += \
     $$PWD/qprofile.hpp
 
 DISTFILES += \
-    $$PWD/cludepackage.json
+    $$PWD/clude.cde
