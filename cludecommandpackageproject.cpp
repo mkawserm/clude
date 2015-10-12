@@ -14,10 +14,20 @@ void CLudeCommandPackageProject::process()
                 );
     this->addOption(save);
 
+    QCommandLineOption list_files(
+                QStringList()<<"list-files",
+                QCoreApplication::translate("main", "show the files list")
+                );
+    this->addOption(list_files);
+
+
     CLudeCommandPackage::process();
     //process all commands here
     if(this->isSet(save)){
         this->actionSave();
+    }
+    else if(this->isSet(list_files)){
+        this->actionListFiles();
     }
     else{
         qDebug() <<"do not know, what to do? see help";
@@ -71,12 +81,22 @@ void CLudeCommandPackageProject::actionSave()
     }
 }
 
+void CLudeCommandPackageProject::actionListFiles()
+{
+    QStringList files;
+    this->walk(QDir::currentPath(),files,QStringList()<<".git"<<".gitignore");
+    qDebug() << "FILES LIST:";
+    foreach (const QString &file, files) {
+        qDebug() << file.toLocal8Bit().constData();
+    }
+}
+
 bool CLudeCommandPackageProject::copyRecursively(const QString &srcFilePath, const QString &tgtFilePath)
 {
     QFileInfo srcFileInfo(srcFilePath);
     if (srcFileInfo.isDir()) {
         QDir sourceDir(srcFilePath);
-        QStringList fileNames = sourceDir.entryList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+        QStringList fileNames = sourceDir.entryList(QDir::Files | QDir::NoDot | QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
         foreach (const QString &fileName, fileNames) {
             //qDebug() << fileName;
             //lets exlude the files and folder we don't want to add to the repository
@@ -134,5 +154,22 @@ QString CLudeCommandPackageProject::getConfigJson(const QString &key)
         }
     }
     return QString();
+}
+
+void CLudeCommandPackageProject::walk(const QString &path, QStringList &files,const QStringList &exclude)
+{
+    QFileInfo vPath(path);
+    if(vPath.isDir()){
+        QDir sourceDir(path);
+        QStringList fileNames = sourceDir.entryList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+        foreach (const QString &fileName, fileNames) {
+            if(exclude.contains(fileName)) continue;
+            const QString vNewPath = QDir::toNativeSeparators(path + QLatin1Char('/') + fileName);
+            this->walk(vNewPath,files,exclude);
+        }
+    }
+    else{
+        files.append(path);
+    }
 }
 

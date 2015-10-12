@@ -37,10 +37,13 @@ class CLudeCommandPackageProject :public CLudeCommandPackage
         /// save the project to local repository
         ///////////////////////////////////////////////////////////////////////////////////////////
         void actionSave();
+        void actionListFiles();
 
 
         bool copyRecursively(const QString &srcFilePath,const QString &tgtFilePath);
         QString getConfigJson(const QString &key);
+
+        void walk(const QString &path, QStringList &files, const QStringList &exclude);
 };
 
 #endif // CLUDECOMMANDPACKAGEPROJECT_HPP
