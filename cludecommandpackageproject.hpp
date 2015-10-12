@@ -37,6 +37,15 @@ class CLudeCommandPackageProject :public CLudeCommandPackage
         /// save the project to local repository
         ///////////////////////////////////////////////////////////////////////////////////////////
         void actionSave();
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        /// \brief actionResolve
+        ///
+        /// resolve project dependencies. It will look into the local repository folder for
+        /// the packages and copy into the current project folder and notify about missing packages
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        void actionResolve();
+
         void actionListFiles();
 
 
