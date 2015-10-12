@@ -11,7 +11,7 @@
 #include "cludecommandpackage.hpp"
 #include "cludecommandpackageinit.hpp"
 #include "cludecommandpackagebuildnumber.hpp"
-
+#include "cludecommandpackageproject.hpp"
 
 class CLudeCommandParser
 {
