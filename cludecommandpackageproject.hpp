@@ -15,11 +15,14 @@
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 
+#include "gconfig.hpp"
 #include "cludepackage.hpp"
 #include "cludecommandpackage.hpp"
+#include "cludedependencyresolver.hpp"
 
 class CLudePackage;
 class CLudeCommandPackage;
+class CLudeDependencyResolver;
 class CLudeCommandPackageProject;
 
 
@@ -58,6 +61,14 @@ class CLudeCommandPackageProject :public CLudeCommandPackage
         QString getConfigJson(const QString &key);
 
         void walk(const QString &path, QStringList &files, const QStringList &exclude);
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        /// \brief getCLudePackageFilePath
+        /// \return
+        ///
+        /// find out clude package file <*.cde> from current package
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        QString getCLudePackageFilePath();
 };
 
 #endif // CLUDECOMMANDPACKAGEPROJECT_HPP

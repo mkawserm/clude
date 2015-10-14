@@ -73,3 +73,8 @@ void CLudePackageDependency::setVersion(const QString &a_version)
     this->m_version = a_version;
 }
 
+
+QString CLudePackageDependency::toString()
+{
+    return this->package()+QLatin1Char('.')+this->name()+this->optor()+this->version();
+}

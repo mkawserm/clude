@@ -14,17 +14,25 @@ void CLudeCommandPackageProject::process()
                 );
     this->addOption(save);
 
+    QCommandLineOption resolve(
+                QStringList()<<"resolve",
+                QCoreApplication::translate("main","resolve dependency")
+                );
+    this->addOption(resolve);
+
     QCommandLineOption list_files(
                 QStringList()<<"list-files",
                 QCoreApplication::translate("main", "show the files list")
                 );
     this->addOption(list_files);
 
-
     CLudeCommandPackage::process();
     //process all commands here
     if(this->isSet(save)){
         this->actionSave();
+    }
+    else if(this->isSet(resolve)){
+        this->actionResolve();
     }
     else if(this->isSet(list_files)){
         this->actionListFiles();
@@ -76,9 +84,46 @@ void CLudeCommandPackageProject::actionSave()
             }
         }
         else{
-            qDebug() << "no clude package file found";
+            qDebug() << "no clude package configuration file found";
         }
     }
+}
+
+void CLudeCommandPackageProject::actionResolve()
+{
+    //TODO resolve all dependency including children packages
+    qDebug() << "resolving dependency...";
+    QString vPackageFilePath = this->getCLudePackageFilePath();
+    QString vProjectPath = QDir::currentPath();
+    if(!vPackageFilePath.isEmpty()){
+        if(!GConfig::repoPath().isEmpty()){
+            CLudeDependencyResolver cdr;
+            cdr.setRootPackage(vPackageFilePath);
+            cdr.resolve();
+            QStringStack dpdc= cdr.getResolvedDependency();
+            while(!dpdc.isEmpty()){
+                QString pname = dpdc.pop();
+                qDebug() << "PACKAGE: "<<pname.toLocal8Bit().constData();
+                CLudePackageDependency clpd(pname);
+                QString vTgtSource = QDir::toNativeSeparators(GConfig::repoPath()+QLatin1Char('/')+
+                                                              clpd.package().replace(".","/")+
+                                                              QLatin1Char('/')+clpd.name()+
+                                                              QLatin1Char('/')+clpd.version());
+                QString vTgtLocation = QDir::toNativeSeparators(vProjectPath+QLatin1Char('/')+
+                                                                clpd.package().replace(".","/")+
+                                                                QLatin1Char('/')+clpd.name());
+                this->copyRecursively(vTgtSource,vTgtLocation);
+            }
+
+        }
+        else{
+            qDebug() << "No local repository path found";
+        }
+    }
+    else{
+        qDebug() << "no clude package configuration file found";
+    }
+
 }
 
 void CLudeCommandPackageProject::actionListFiles()
@@ -116,6 +161,8 @@ bool CLudeCommandPackageProject::copyRecursively(const QString &srcFilePath, con
             this->copyRecursively(newSrcFilePath,newTgtFilePath);
         }
     } else {
+
+
         QFileInfo targetDir(tgtFilePath);
         if(!targetDir.dir().exists()){
             targetDir.dir().mkpath(targetDir.dir().absolutePath());
@@ -124,7 +171,7 @@ bool CLudeCommandPackageProject::copyRecursively(const QString &srcFilePath, con
                  << QDir::toNativeSeparators(srcFilePath)
                  << "->"
                  << QDir::toNativeSeparators(tgtFilePath);
-        //if(QFile::exists(tgtFilePath)) QFile::remove(tgtFilePath);
+        if(QFile::exists(tgtFilePath)) QFile::remove(tgtFilePath);
         if (!QFile::copy(srcFilePath,tgtFilePath)){
             qDebug() << "Failed to copy";
             return false;
@@ -132,6 +179,42 @@ bool CLudeCommandPackageProject::copyRecursively(const QString &srcFilePath, con
         else{
             return true;
         }
+
+        /*
+        if(!targetDir.exists()){
+            qDebug() << "copying: "
+                     << QDir::toNativeSeparators(srcFilePath)
+                     << "->"
+                     << QDir::toNativeSeparators(tgtFilePath);
+
+            if (!QFile::copy(srcFilePath,tgtFilePath)){
+                qDebug() << "Failed to copy";
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            if(targetDir.size()!=srcFileInfo.size()){
+                qDebug() << "copying: "
+                         << QDir::toNativeSeparators(srcFilePath)
+                         << "->"
+                         << QDir::toNativeSeparators(tgtFilePath);
+                if(QFile::exists(tgtFilePath)) QFile::remove(tgtFilePath);
+                if (!QFile::copy(srcFilePath,tgtFilePath)){
+                    qDebug() << "Failed to copy";
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+            else{
+                qDebug() << "Source file and target file already updated";
+                return true;
+            }
+        }*/
     }
     return true;
 }
@@ -171,5 +254,19 @@ void CLudeCommandPackageProject::walk(const QString &path, QStringList &files,co
     else{
         files.append(path);
     }
+}
+
+QString CLudeCommandPackageProject::getCLudePackageFilePath()
+{
+    QDir vDir(QDir::currentPath());
+    vDir.setNameFilters(QStringList()<<"*.pro");
+    QStringList one =  vDir.entryList(QDir::Files);
+    if(one.size()==1){
+        QString name = one[0].replace(".pro","");
+        QString path = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+name+QLatin1String(".cde"));
+
+        return path;
+    }
+    return QString();
 }
 

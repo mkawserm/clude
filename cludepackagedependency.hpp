@@ -2,6 +2,7 @@
 #define CLUDEPACKAGEDEPENDENCY_HPP
 
 #include <QString>
+
 #include "cludepackage.hpp"
 
 class CLudePackage;
@@ -27,6 +28,8 @@ class CLudePackageDependency
         void setName(const QString &a_name);
         void setOptor(const QString &a_optor);
         void setVersion(const QString &a_version);
+
+        QString toString();
 };
 
 #endif // CLUDEPACKAGEDEPENDENCY_HPP
