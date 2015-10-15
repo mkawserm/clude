@@ -5,6 +5,11 @@ CLudeCommandPackage::CLudeCommandPackage()
     this->m_parser.addHelpOption();
 }
 
+CLudeCommandPackage::~CLudeCommandPackage()
+{
+
+}
+
 void CLudeCommandPackage::setArgumentList(const QStringList &aglist)
 {
     this->m_argument_list = aglist;

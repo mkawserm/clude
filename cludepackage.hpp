@@ -34,7 +34,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-#include "cludePackagedependency.hpp"
+#include "cludepackagedependency.hpp"
 
 class CLudePackage;
 class CLudePackageDependency;

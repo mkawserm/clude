@@ -1,6 +1,6 @@
 {
     "author": "kawser",
-    "build": 85,
+    "build": 86,
     "created": "01/10/2015 12:06:21 AM",
     "dependency": [
     ],
@@ -18,11 +18,14 @@
         "package manager",
         "development"
     ],
-    "updated": "14/10/2015 07:44:47 PM",
+    "updated": "15/10/2015 02:19:20 PM",
     "urls": {
         "author": "https://kawser.org",
         "documentation": "https://git.kawser.org/clude",
         "download": "https://git.kawser.org/clude/clude.zip"
     },
+    "version": "1.0.0"
+}
+
     "version": "1.0.0"
 }
