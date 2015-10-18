@@ -25,3 +25,18 @@ QString GConfig::repoPath()
     return QString();
 }
 
+QString GConfig::projectPriFilePath()
+{
+    QDir vDir(QDir::currentPath());
+    vDir.setNameFilters(QStringList()<<"*.pro");
+    QStringList one =  vDir.entryList(QDir::Files);
+    if(one.size()==1){
+        QString name = one[0].replace(".pro","");
+        QString pri = QDir::toNativeSeparators(QDir::currentPath()+QDir::separator()+name+QLatin1String(".pri"));
+        return pri;
+    }
+    else{
+        return QString();
+    }
+}
+

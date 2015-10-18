@@ -1,6 +1,7 @@
 #ifndef GCONFIG_HPP
 #define GCONFIG_HPP
 
+#include <QDir>
 #include <QFile>
 #include <QString>
 #include <QJsonArray>
@@ -14,6 +15,7 @@ class GConfig
         GConfig();
 
         static QString repoPath();
+        static QString projectPriFilePath();
 };
 
 #endif // GCONFIG_HPP

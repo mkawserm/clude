@@ -101,6 +101,7 @@ void CLudeCommandPackageProject::actionResolve()
             cdr.setRootPackage(vPackageFilePath);
             cdr.resolve();
             QStringStack dpdc= cdr.getResolvedDependency();
+            QStringList vPriFilePathList;
             while(!dpdc.isEmpty()){
                 QString pname = dpdc.pop();
                 qDebug() << "PACKAGE: "<<pname.toLocal8Bit().constData();
@@ -112,8 +113,36 @@ void CLudeCommandPackageProject::actionResolve()
                 QString vTgtLocation = QDir::toNativeSeparators(vProjectPath+QLatin1Char('/')+
                                                                 clpd.package().replace(".","/")+
                                                                 QLatin1Char('/')+clpd.name());
+                vPriFilePathList.append(clpd.package().replace(".","/")+
+                                        QLatin1Char('/')+
+                                        clpd.name()+
+                                        QLatin1Char('/')+
+                                        clpd.name()+
+                                        QLatin1String( ".pri")
+                                        );
+
                 this->copyRecursively(vTgtSource,vTgtLocation);
             }
+
+            //Now include all pri files to the current project
+            qDebug() << "\n\n\n::INCLUDING PACKAGES  TO THE PROJECT::";
+            QString vPriPath = GConfig::projectPriFilePath();
+            //if(QFile::exists(vPriPath)){
+                QFile vPriFile(vPriPath);
+                if(vPriFile.open(QIODevice::ReadWrite|QIODevice::Text)){
+                    QByteArray data = vPriFile.readAll();
+                    vPriFile.seek(vPriFile.size());
+                    while(!vPriFilePathList.isEmpty()){
+                        QString p = vPriFilePathList.takeFirst();
+                        QString inc = QString("\ninclude(%1)\n").arg(p);
+                        if(data.indexOf(inc)==-1){
+                            vPriFile.write(inc.toLocal8Bit());
+                            qDebug() <<"  "<< p.toLocal8Bit().constData();
+                        }
+                    }
+                    vPriFile.close();
+                }
+            //}
 
         }
         else{
