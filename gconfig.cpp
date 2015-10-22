@@ -77,7 +77,7 @@ QStringList GConfig::projectFileList()
     return QStringList();
 }
 
-bool GConfig::copy(const QString &source, const QString &destination, QMultiMap<quint8, QString> &message)
+void GConfig::copy(const QString &source, const QString &destination, quint8 &status)
 {
         QString vSource = source;
         QString vDestination = destination;
@@ -88,9 +88,8 @@ bool GConfig::copy(const QString &source, const QString &destination, QMultiMap<
         QFileInfo vSourceFileInfo(vSource);
         QFileInfo vDestinationFileInfo(vDestination);
         if(!vSourceFileInfo.isFile()){
-            message.insert(0,vSource);//failed
-            //emit notify(RCopyMessage(RCopyMessage::FAILED,vSource,vDestination,QLatin1String("Source path is not a file")));
-            return false;
+            status = 0; //failed
+            return;
         }
 
         if(!vDestinationFileInfo.dir().exists()){
@@ -122,24 +121,16 @@ bool GConfig::copy(const QString &source, const QString &destination, QMultiMap<
         {
             if(QFile::copy(vSource,vDestination))
             {
-                message.insert(1,vSource);
-                //qDebug()<<"success";
-                //emit notify(RCopyMessage(RCopyMessage::SUCCESS,vSource,vDestination,QString()));
-                return true;
+                status = 1;//success
             }
             else
             {
-                message.insert(0,vSource);
-                //qDebug() << "failed";
-                //emit notify(RCopyMessage(RCopyMessage::FAILED,vSource,vDestination,QString()));
-                return false;
+                status = 0;//failed
             }
         }
         else
         {
-            message.insert(3,vSource);
-            //emit notify(RCopyMessage(RCopyMessage::IGNORED,vSource,vDestination,QString()));
-            return false;
+            status = 3;//ignored
         }
 }
 

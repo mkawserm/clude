@@ -30,7 +30,7 @@ class GConfig
         ///////////////////////////////////////////////////////////////////////////////////////////
         static QStringList projectFileList();
 
-        static bool copy(const QString &source,const QString &destination,QMultiMap<quint8,QString> &message);
+        static void copy(const QString &source,const QString &destination,quint8 &status);
         static QString hash(const QString &source);
 };
 

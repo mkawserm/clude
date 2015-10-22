@@ -63,12 +63,7 @@ void CLudeCommandPackageProject::actionSave()
         return;
     }
 
-    QDir vDir(QDir::currentPath());
-    vDir.setNameFilters(QStringList()<<"*.pro");
-    QStringList one =  vDir.entryList(QDir::Files);
-    if(one.size()==1){
-        QString name = one[0].replace(".pro","");
-        QString path = QDir::toNativeSeparators(QDir::currentPath()+QLatin1String("/")+name+QLatin1String(".cde"));
+        QString path = GConfig::projectPriFilePath().replace(".pri",".cde");
         if(QFile::exists(path)){
             CLudePackage vPackage;
             if(vPackage.fromJsonFile(path)){
@@ -80,13 +75,42 @@ void CLudeCommandPackageProject::actionSave()
                             vPackage.version()
                             );
                 qDebug() <<":: LOCATION : "<<mProjectSaveLocation<<" ::";
-                this->copyRecursively(QDir::currentPath(),mProjectSaveLocation);
+                //this->copyRecursively(QDir::currentPath(),mProjectSaveLocation);
+                QStringList vFiles = GConfig::projectFileList();
+                while(!vFiles.isEmpty())
+                {
+                    const QString vFilePath = vFiles.takeFirst();
+                    //qDebug() << vFilePath;
+                    QString source = QDir::toNativeSeparators(
+                                QString(vFilePath).replace(QLatin1String("$$PWD"),QDir::currentPath())
+                                );
+                    QString destination = QDir::toNativeSeparators(
+                                QString(vFilePath).replace(QLatin1String("$$PWD"),mProjectSaveLocation)
+                                );
+
+                    quint8 status;
+                    QByteArray msg;
+                    msg.append(source);
+                    msg.append(" --> ");
+                    msg.append(destination);
+                    GConfig::copy(source,destination,status);
+                    if(status==0){
+                        msg.prepend("FAILED :: ");
+                    }
+                    else if(status==1){
+                        msg.prepend("COPIED :: ");
+                    }
+                    else if(status==3){
+                        msg.prepend("IGNORED :: ");
+                    }
+
+                    qDebug() << msg.constData();
+                }
             }
         }
         else{
             qDebug() << "no clude package configuration file found";
         }
-    }
 }
 
 void CLudeCommandPackageProject::actionResolve()
