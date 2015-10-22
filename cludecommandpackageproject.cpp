@@ -157,8 +157,8 @@ void CLudeCommandPackageProject::actionResolve()
 
 void CLudeCommandPackageProject::actionListFiles()
 {
-    QStringList files;
-    this->walk(QDir::currentPath(),files,QStringList()<<".git"<<".gitignore");
+    QStringList files = GConfig::projectFileList();
+    //this->walk(QDir::currentPath(),files,QStringList()<<".git"<<".gitignore");
     qDebug() << "FILES LIST:";
     foreach (const QString &file, files) {
         qDebug() << file.toLocal8Bit().constData();
