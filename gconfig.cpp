@@ -51,7 +51,11 @@ QStringList GConfig::projectFileList()
             while(!vPriFile.atEnd())
             {
                 QString vLine = QLatin1String(vPriFile.readLine().constData());
-                if(vLine.indexOf("include")!=-1) continue;
+                //LET's ignore some lines
+                if(vLine.indexOf("include")!=-1
+                        || vLine.indexOf("CONFIG")!=-1
+                        || vLine.indexOf("QT")!=-1
+                        || vLine.indexOf("TEMPLATE")!=-1) continue;
                 if(vLine.contains("="))
                 {
                     vLine = vLine.split("=").at(1);

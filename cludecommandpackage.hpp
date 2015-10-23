@@ -16,7 +16,7 @@ class CLudeCommandPackage
         CLudeCommandPackage();
 
     public:
-        ~CLudeCommandPackage();
+        virtual ~CLudeCommandPackage();
         void setArgumentList(const QStringList &aglist);
         void addOption(const QCommandLineOption &option);
         void addDescription(const QString &des);
