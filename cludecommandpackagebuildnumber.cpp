@@ -6,6 +6,11 @@ CLudeCommandPackageBuildNumber::CLudeCommandPackageBuildNumber():
     this->addDescription(QLatin1String("update build information"));
 }
 
+CLudeCommandPackageBuildNumber::~CLudeCommandPackageBuildNumber()
+{
+
+}
+
 void CLudeCommandPackageBuildNumber::process()
 {
     QCommandLineOption build_number_increase(
@@ -66,10 +71,11 @@ void CLudeCommandPackageBuildNumber::updateBuildNumber(int inc)
     QFile vFile(vPath);
     if(!vFile.exists()){
         qDebug() << "PATH: "<<vPath;
-        qDebug() << "cludepackage.json file does not exists";
+        qDebug() << QString("%1.cde file doesn't exists").arg(name).toLocal8Bit().constData();
     }
     else{
         CLudePackage clp;
+        qDebug() << vPath;
         if(clp.fromJsonFile(vPath)){
             clp.setUpdated(QDateTime::currentDateTime().toLocalTime());
             clp.setBuild(clp.build()+inc);
@@ -81,7 +87,7 @@ void CLudeCommandPackageBuildNumber::updateBuildNumber(int inc)
             }
         }
         else{
-            qDebug() << "cludepackage.json file parsing error";
+            qDebug() << QString("%1.cde file parsing error").arg(name).toLocal8Bit().constData();
         }
     }
 }

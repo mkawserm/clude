@@ -22,6 +22,7 @@ class CLudeCommandPackageBuildNumber : public CLudeCommandPackage
 {
     public:
         CLudeCommandPackageBuildNumber();
+        ~CLudeCommandPackageBuildNumber();
         void process() Q_DECL_OVERRIDE;
         QString name() Q_DECL_OVERRIDE;
         QString version() Q_DECL_OVERRIDE;
