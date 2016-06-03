@@ -75,7 +75,7 @@ void CLudeCommandPackageBuildNumber::updateBuildNumber(int inc)
     }
     else{
         CLudePackage clp;
-        qDebug() << vPath;
+        qDebug() << vPath.toLocal8Bit().constData();
         if(clp.fromJsonFile(vPath)){
             clp.setUpdated(QDateTime::currentDateTime().toLocalTime());
             clp.setBuild(clp.build()+inc);
