@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "author": "kawser",
     "build": 89,
@@ -26,3 +27,33 @@
     },
     "version": "1.0.0"
 }
+=======
+{
+    "author": "kawser",
+    "build": 94,
+    "created": "01/10/2015 12:06:21 AM",
+    "dependency": [
+    ],
+    "description": "clude will make c++ source code modular and keep track of package information",
+    "group": "development",
+    "licenses": [
+    ],
+    "name": "clude",
+    "package": "org.kawser.cmdapp",
+    "qdependency": [
+        "core"
+    ],
+    "tags": [
+        "clude",
+        "package manager",
+        "development"
+    ],
+    "updated": "29/10/2015 01:03:55 AM",
+    "urls": {
+        "author": "https://kawser.org",
+        "documentation": "https://git.kawser.org/clude",
+        "download": "https://git.kawser.org/clude/clude.zip"
+    },
+    "version": "1.0.0"
+}
+>>>>>>> origin/master

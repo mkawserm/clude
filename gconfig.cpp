@@ -48,6 +48,7 @@ QStringList GConfig::projectFileList()
         if(vPriFile.open(QIODevice::ReadOnly))
         {
             QStringList vFileList;
+            vFileList.append(vPriFilePath.replace(QDir::toNativeSeparators(QDir::currentPath()),QLatin1String("$$PWD")));
             while(!vPriFile.atEnd())
             {
                 QString vLine = QLatin1String(vPriFile.readLine().constData());
